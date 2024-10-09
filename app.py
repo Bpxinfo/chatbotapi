@@ -1,4 +1,3 @@
-
 from flask import Flask,session, request, Response,jsonify
 from flask_cors import CORS
 import time
@@ -31,11 +30,11 @@ def sample_chat_completions():
     from azure.core.credentials import AzureKeyCredential
 
     client = ChatCompletionsClient(endpoint=endpoint, credential=AzureKeyCredential(key))
-
+    user_message = request.json.get('message')
     response = client.complete(
         messages=[
             SystemMessage(content="You are a helpful assistant."),
-            UserMessage(content="How many feet are in a mile?"),
+            UserMessage(content=f"{user_message}"),
         ]
     )
 
